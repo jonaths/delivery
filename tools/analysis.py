@@ -8,7 +8,7 @@ def get_surges(df, resample_period='H', rolling_window=4, surge_threshold=0.25):
     Calculates surges according to a moving average and threshold criteria
     :param df: the dataframe with a datetime and value column
     :param resample_period: if the surge is going to be calculated
-        per hour (H) per 15 min (15M), etc.
+        per hour (H) per 15 min (15T), etc.
     :param rolling_window: the larger the window the larger the value so that a
         surge is considered.
     :param surge_threshold: the lower the threshold more surges are calculated

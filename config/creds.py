@@ -1,5 +1,4 @@
-# host="+ creds.PGHOST +" port="+ "5432" +" dbname="+ creds.PGDATABASE +" user=" + creds.PGUSER \
-# +" password="+ creds.PGPASSWORD
+# Postgres credentials
 creds = {
     'PGHOST': 'localhost',
     'PGDATABASE': 'delivery',
