@@ -37,3 +37,15 @@ def filter_per_value(df, column_name, matching_value):
 # from trips_trip
 # where
 # fare>80 and EXTRACT(DOW FROM pickup_time)=1;
+
+# np.random.seed(seed=1111)
+# data = [2, 2, 2, 2, 2, 3, 2, 2, 5, 3, 2, 2]
+
+# df = pd.DataFrame({'datetime': days, 'value': data})
+# df['datetime'] = pd.to_datetime(df['datetime'], utc=True)
+# df['datetime_hour'] = df['datetime'].dt.hour
+# df['datetime_minute'] = df['datetime'].dt.minute
+# df['date_hours_minutes'] = pd.to_datetime(pd.Timestamp("today")) + pd.to_timedelta(df.datetime_hour, unit='h')
+# df = df.set_index('datetime')
+
+# pd.to_datetime(pd.Timestamp("today").strftime("%Y-%m-%d"))
