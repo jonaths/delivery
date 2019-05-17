@@ -1,0 +1,16 @@
+select id,pickup_time,pickup_location,fare,EXTRACT(DOW FROM pickup_time)
+from trips_trip
+where
+fare>80 and EXTRACT(DOW FROM pickup_time)=1;
+
+
+select id,pickup_time,pickup_location,fare,
+st_contains(latlon, ST_GeomFromText('POINT(16.391944 48.218056)', 4326)),
+EXTRACT(DOW FROM pickup_time)
+from trips_trip
+where
+fare>80 and EXTRACT(DOW FROM pickup_time)=1;
+
+st_contains(latlon, ST_GeomFromText('POINT(16.391944 48.218056)', 4326))
+
+'ST_Contains(ST_GeomFromGeoJSON(' + str(json_location) + '), pickup_location)' \
