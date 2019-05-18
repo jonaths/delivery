@@ -1,10 +1,4 @@
 {
-  "type": "Feature",
-  "properties": {
-    "name": "Bermuda Triangle",
-    "area": 1150180
-  },
-  "geometry": {
     "type": "Polygon",
     "coordinates": [
       [
@@ -14,5 +8,4 @@
         [-64.73, 32.31]
       ]
     ]
-  }
 }
