@@ -5,12 +5,15 @@ import pandas as pd
 from config.creds import creds
 from tools.analysis import get_surges, filter_per_value
 from datetime import datetime, timedelta
-from tools.macros import process
+from tools.macros import process, to_text
 
 # INPUTS -----------------------------------------------------------------
-weekday = 0
-location_file = 'locations/losangeles.json'
-min_fare = 5
+weekday = 0  # assumes it is today
+hour = 10  # what time is it now
+tz_name = 'America/Los_Angeles'  # results localization
+location_file = 'locations/losangeles.json'  # here are the area boundaries
+min_fare = 10  # only consider fares larger than this
+resample_period = '30T'  # how to aggregate data (30T means each 30 minutes)
 
 # 1) Set up database connection ------------------------------------------
 conn_string = "host=" + creds['PGHOST'] + " port=" + "5432" + " dbname=" \
@@ -27,7 +30,7 @@ with open(location_file) as json_file:
 
 polygon_str = '\'' + str(json_location) + '\''
 
-# Still have to remove fare where and include location information
+# postgres query
 sql = 'select ' \
         'id, ' \
         'pickup_time, ' \
@@ -42,7 +45,6 @@ sql = 'select ' \
 
 
 df = pd.read_sql(sql, conn)
-print(df.head())
 
 # 3) Setup columns -------------------------------------------------------
 
@@ -55,7 +57,7 @@ df = process(df)
 
 # group data in 30 min bins, consider surge if current total fares are bigger than
 # 60% of the current rolling window of 90 minutes. This can be adjusted.
-surge = get_surges(df, resample_period='30T', rolling_window=3, surge_threshold=0.20)
+surge = get_surges(df, resample_period=resample_period, rolling_window=3, surge_threshold=0.20)
 
 output = filter_per_value(surge, 'surge', True)
 
@@ -64,3 +66,5 @@ print("Estimated surges today:")
 # date_hours_minutes: the time the surge starts. it ends one resample_period afterwards
 # diff: the expected larger revenue
 print(output)
+
+to_text(output, hour, resample_period, tz_name)
